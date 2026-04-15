@@ -803,10 +803,24 @@ And a quick-plot check to make sure the transformation looks reasonable enough
 ```{r}
 ggcyto(MyGatingSet[[1]], subset="root",
  aes(x="V3-A", y="R1-A")) + geom_hex(bins=100)
+```
 
+:::
+
+---
+
+::: {.fragment}
+```{r}
 ggcyto(MyGatingSet[[1]], subset="root",
  aes(x="V3-A", y="B4-A")) + geom_hex(bins=100)
+```
 
+:::
+
+---
+
+::: {.fragment}
+```{r}
 ggcyto(MyGatingSet[[1]], subset="root",
  aes(x="R1-A", y="B4-A")) + geom_hex(bins=100)
 ```
@@ -852,7 +866,9 @@ And add a general CD45+ gate (i.e. those that I need actual concentration for)
 :::
 :::
 
+::: {.fragment}
 ![](images/00_CD45.png)
+:::
 
 ---
 
@@ -862,7 +878,9 @@ And add a general CD19+ gate (B cells)
 :::
 :::
 
+::: {.fragment}
 ![](images/01_CD19.png)
+:::
 
 ---
 
@@ -872,7 +890,9 @@ And add a general CD14+ (Monocytes)
 :::
 :::
 
+::: {.fragment}
 ![](images/02_CD14.png)
+:::
 
 ---
 
@@ -882,7 +902,9 @@ And add a general gate for likely T and NK cells
 :::
 :::
 
+::: {.fragment}
 ![](images/03_TandNKprobs.png)
+:::
 
 ---
 
@@ -1650,7 +1672,9 @@ And we can use the `dplyr` package `bind_rows()` to assemble all our outputs for
 
 ::: {.fragment}
 ```{r}
-Dataset <- purrr::map(.x=MyGatingSet, .f=CellConcentration, subset="CD19", dilutionMultiplier=100) |> bind_rows()
+Dataset <- purrr::map(.x=MyGatingSet,
+ .f=CellConcentration, subset="CD19", 
+ dilutionMultiplier=100) |> bind_rows()
 ```
 
 :::
@@ -1664,6 +1688,8 @@ Dataset
 
 :::
 
+---
+
 ::: {.fragment}
 ::: {.callout-tip title="."}
 And now with our dataset complete, we can save it out for later use. 
@@ -1673,7 +1699,9 @@ And now with our dataset complete, we can save it out for later use.
 ::: {.fragment}
 ```{r}
 #| eval: FALSE
-StorageLocation <- file.path("C:", "User", "FulanoDeTal", "Desktop")
+
+# StorageLocation <- file.path("data") #Within Working Directory
+StorageLocation <- file.path("C:", "User", "FulanoDeTal", "Desktop") #Elsewhere on your computer, customize
 StorageLocationAndName <- file.path(StorageLocation, "CellConcentrationsForTodaysExperiment.csv")
 write.csv(Dataset, StorageLocationAndName, row.names=FALSE)
 ```
@@ -1682,15 +1710,37 @@ write.csv(Dataset, StorageLocationAndName, row.names=FALSE)
 
 # Discussion
 
+::: {.fragment}
+::: {.callout-tip title="."}
 In this session, we survived the downpour that is creating functions in R. We looked at both relatively simple examples (to get an idea of the general syntax) as well as step-by-step built out the cell concentration to get a better fundamental understanding of how some of these more targeted applications take various inputs and arguments, run code using these inputs, and then return us a specified output. We also ventured into iteration and how the purrr package can help us in this regard. 
+:::
+:::
 
+::: {.fragment}
+::: {.callout-tip title="."}
 I would like to re-emphasize that this material **is a lot**, and that feeling like you will need to revisit this topic is to be expected. When I first encountered a for-loop, I didn't know what to do with it. By the time I had figured it out, I couldn't envision how to write a function or iterate through a vector. Figuring out how to do so takes time, and often arises more out of targeted need. You want to do something for your cytometry pipeline, but are tired of copying and pasting with minor changes, you end up generalizing it into a function. 
+:::
+:::
 
+---
+
+::: {.fragment}
+::: {.callout-tip title="."}
 I also highly recommend looking at the additional resources, because in the end, learning about the concepts from different perspectives is always helpful, since every instructors focus will differ. 
+:::
+:::
 
+::: {.fragment}
+::: {.callout-tip title="."}
 Fortunately, now that we have encountered functions and iteration, we will gradually see more examples in context of focused application as we head into the next section. We will start focusing on acquiring some of the toolsets we need for high-dimensional and unsupervised analysis, starting next time with how to downsample events from individual .fcs files, concatenate them together, and write them to a new .fcs file that won't be immediately corrupt on import into your favorite commercial software. 
+:::
+:::
+
+---
 
 ![](images/TakeAway.png)
+
+---
 
 # Additional Resources
 
